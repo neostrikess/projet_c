@@ -1,0 +1,11 @@
+# Fichier Makefile local
+Makefile
+
+# Fichiers DLL
+SDL3.dll
+
+# Configuration VSCode locale
+tasks.json
+
+# Ignorer les fichiers binaires
+*.exe
