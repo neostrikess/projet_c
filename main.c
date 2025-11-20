@@ -1,5 +1,22 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
+#include <windows.h>
+
+LRESULT CALLBACK KeyboardHook(int nCode, WPARAM wParam, LPARAM lParam) {
+    if (nCode == HC_ACTION) {
+        KBDLLHOOKSTRUCT *kbd = (KBDLLHOOKSTRUCT *)lParam;
+
+        // Autoriser uniquement F12 pour quitter
+        if (kbd->vkCode == VK_F12) {
+            return CallNextHookEx(NULL, nCode, wParam, lParam);
+        }
+
+        // Bloquer toutes les autres touches
+        return 1;  
+    }
+
+    return CallNextHookEx(NULL, nCode, wParam, lParam);
+}
 
 int main(int argc, char* argv[]) {
     SDL_Window* window = NULL;
@@ -35,10 +52,22 @@ int main(int argc, char* argv[]) {
                 break;
         }
     }
-    SDL_SetRenderDrawColor(renderer, 40, 128, 48, 0);
+    SDL_SetRenderDrawColor(renderer, 21, 13, 247, 0);
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
     SDL_Delay(1); 
     }
+     HHOOK hook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardHook, NULL, 0);
+
+    if (!hook) {
+        printf("Erreur lors de l'installation du hook.\n");
+        return 1;
+    }
+
+    MSG msg;
+    while (GetMessage(&msg, NULL, 0, 0)) {}
+
+    UnhookWindowsHookEx(hook);
     return 0;
+
 }

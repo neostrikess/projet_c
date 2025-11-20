@@ -2,7 +2,7 @@
 CC = gcc
 
 # Chemins vers SDL
-SDL_PATH = C:\Users\rapha\Documents\SDL\x86_64-w64-mingw32
+SDL_PATH = C:\Users\bapti\OneDrive\Documents\ESGI\2eme_annee\1er trimestre\C\SDL\SDL\x86_64-w64-mingw32
 CFLAGS = -I"$(SDL_PATH)\include"
 LDFLAGS = -L"$(SDL_PATH)\lib" -lSDL3
 
